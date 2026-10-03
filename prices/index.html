@@ -243,7 +243,7 @@ const cname = i => L === 'tr' ? CAT_TR[CATS[i]] : CATS[i];
 const usd = n => 'USD ' + Math.round(n).toLocaleString(L === 'tr' ? 'tr-TR' : 'en-US');
 DATA.forEach(r => {
   r.names = [];
-  r.h = [r.i, CATS[r.c], CAT_TR[CATS[r.c]], r.b, r.m, r.p, r.d, r.k, TR.cond[r.k] || '', r.q, r.l, TR.loc[r.l] || '', r.t, TR.lead[r.t] || '', r.names.join(' ')].join(' ').toLowerCase();
+  r.h = [r.i, CATS[r.c], CAT_TR[CATS[r.c]], r.b, r.m, r.p, r.d, r.k, TR.cond[r.k] || '', r.q, r.l, TR.loc[r.l] || '', r.t, TR.lead[r.t] || '', r.names.join(' '), r.w || '', r.n || ''].join(' ').toLowerCase();
 });
 let cat = '', limit = 160;
 const picked = new Set();
@@ -281,7 +281,11 @@ function chips(){
   $('#chips').innerHTML = `<button class="chip" type="button" data-c="" aria-pressed="${cat === ''}">${t('allgroups')}<span class="n">${DATA.length}</span></button>` +
     CATS.map((_, i) => counts[i] ? `<button class="chip" type="button" data-c="${i}" aria-pressed="${cat === String(i)}">${esc(cname(i))}<span class="n">${counts[i]}</span></button>` : '').join('');
 }
-function availPill(r){ if (MODE === 'wtb') return r.t ? `<span class="pill lead">${esc(tx('lead', r.t))}</span>` : '<span class="pd" style="margin:0">—</span>';
+function privLine(r, toks){
+  return `<div class="pd" style="margin-top:7px;color:var(--accent)"><b>${t('lbl_who')}:</b> ${r.w ? hl(r.w, toks) : '—'}${r.x != null ? ` · <b>${t('lbl_target')}:</b> ${usd(r.x)}` : ''}${r.off ? ` · <span class="pill ask">${t('lbl_off')}</span>` : ''}</div>` +
+    (r.n ? `<div class="pd" style="margin-top:3px">${hl(r.n, toks)}</div>` : '');
+}
+function availPill(r){ if (MODE.startsWith('wtb')) return r.t ? `<span class="pill lead">${esc(tx('lead', r.t))}</span>` : '<span class="pd" style="margin:0">—</span>';
   return `<span class="pill ${r.a}">${esc(r.t ? tx('lead', r.t) : t('av_ask_short'))}</span>`; }
 function render(){
   const toks = $('#q').value.toLowerCase().split(/\s+/).filter(Boolean);
@@ -294,7 +298,7 @@ function render(){
     if (r.c !== last) { last = r.c; const n = res.filter(x => x.c === r.c).length;
       out += `<div class="group"><h3>${esc(cname(r.c))}</h3><span>${n} ${t('products_l')}</span></div>` + head; }
     const meta = [r.b, r.p ? 'P/N ' + r.p : ''].filter(Boolean).join(' · ');
-    const prod = `<div class="pm">${hl(r.m, toks)}</div>${meta ? `<div class="pmeta">${hl(meta, toks)}</div>` : ''}${r.d ? `<div class="pd">${hl(r.d, toks)}</div>` : ''}`;
+    const prod = `<div class="pm">${hl(r.m, toks)}</div>${meta ? `<div class="pmeta">${hl(meta, toks)}</div>` : ''}${r.d ? `<div class="pd">${hl(r.d, toks)}</div>` : ''}${MODE === 'wtbdesk' ? privLine(r, toks) : ''}`;
     {
       out += `<div class="row c${PRICED ? ' cp' : ''}${picked.has(r.i) ? ' sel' : ''}">
         <span class="pickc"><input class="pick" type="checkbox" id="p-${r.i}" data-id="${r.i}" ${picked.has(r.i) ? 'checked' : ''} aria-label="${esc(r.m)}"></span>
@@ -321,6 +325,10 @@ function basket(){
   $('#bcopy').textContent = t('bcopy');
 }
 function requestText(){
+  if (MODE === 'wtbdesk') {
+    const wl = DATA.filter(r => picked.has(r.i)).map(r => `- ${r.m}${r.p ? ' · P/N ' + r.p : ''} · ${t('h_qty')}: ${tx('qty', r.q) || '—'}${r.t ? ' · ' + tx('lead', r.t) : ''}`);
+    return t('req_hello') + '\n\n' + t('req_intro') + '\n' + wl.join('\n') + '\n\n' + t('req_thanks');
+  }
   if (MODE === 'wtb') {
     const wl = DATA.filter(r => picked.has(r.i)).map(r => `- ${r.i} · ${r.m}${r.p ? ' · P/N ' + r.p : ''}\n  ${t('yourprice')}: ___ · ${t('yourqty')}: ___ · ${t('yourloc')}: ___ · ${t('yourlead')}: ___`);
     return t('req_hello') + '\n\n' + t('req_intro') + '\n' + wl.join('\n') + '\n\n' + t('req_thanks');
