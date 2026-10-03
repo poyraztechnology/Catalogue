@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="author" content="Poyraz Technology Trading – FZCO">
+<title>Poyraz Wanted to Buy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>[hidden]{display:none!important} img{max-width:100%}/* Layout: dark brand band, intro with key figures, sticky search + category chips, one grouped product ledger, terms footer. */
+:root{
+  --band:#1F1A16; --band-ink:#F4EEE6; --band-muted:#B9AC9C;
+  --bg:#F5F2ED; --surface:#FFFFFF; --ink:#1E1A16; --muted:#6C635A; --line:#E2DBD0; --line-strong:#CFC5B6;
+  --accent:#8A5A2B; --accent-ink:#FFFFFF; --accent-soft:#F2E8DA; --chip:#F1EDE7;
+  --ok:#2E7550; --okbg:#E3F1E8; --amber:#9C640A; --amberbg:#FAEFD7; --greybg:#EFEBE5; --bad:#B23A2B; --badbg:#F8E1DD;
+  --mark:#FFE59A; --private:#9B3326;
+  --f-head:"Archivo","Helvetica Neue",Arial,sans-serif; --f-body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --band:#0F0D0B; --band-ink:#F4EEE6; --band-muted:#A69886;
+  --bg:#151311; --surface:#1E1B18; --ink:#EFE9E1; --muted:#A39A8F; --line:#34302A; --line-strong:#4A433B;
+  --accent:#DBA770; --accent-ink:#1A1410; --accent-soft:#2D251D; --chip:#26221E;
+  --ok:#86CFA2; --okbg:#1C3325; --amber:#E8BE6C; --amberbg:#392D15; --greybg:#2A2622; --bad:#F2917F; --badbg:#3D211C;
+  --mark:#6B5521; --private:#C0503F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --band:#0F0D0B; --band-ink:#F4EEE6; --band-muted:#A69886;
+  --bg:#151311; --surface:#1E1B18; --ink:#EFE9E1; --muted:#A39A8F; --line:#34302A; --line-strong:#4A433B;
+  --accent:#DBA770; --accent-ink:#1A1410; --accent-soft:#2D251D; --chip:#26221E;
+  --ok:#86CFA2; --okbg:#1C3325; --amber:#E8BE6C; --amberbg:#392D15; --greybg:#2A2622; --bad:#F2917F; --badbg:#3D211C;
+  --mark:#6B5521; --private:#C0503F; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:15px; line-height:1.5; margin:0}
+.band{background:var(--band); color:var(--band-ink); padding-inline:16px}
+.band .in{max-width:1320px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding-block:12px; flex-wrap:wrap}
+.mark{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+.mark b{font-family:var(--f-head); font-weight:800; font-size:20px; letter-spacing:.16em}
+.mark span{font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--band-muted)}
+.right{display:flex; align-items:center; gap:10px}
+.private{background:var(--private); color:#fff; font-size:11.5px; font-weight:700; letter-spacing:.1em; padding:5px 10px; border-radius:6px}
+.lang{display:inline-flex; border:1px solid color-mix(in srgb, var(--band-ink) 30%, transparent); border-radius:8px; overflow:hidden}
+.lang button{font:inherit; font-size:12.5px; font-weight:700; letter-spacing:.06em; padding:6px 12px; background:transparent; color:var(--band-muted); border:0; cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--band-ink); color:var(--band)}
+main{padding-inline:16px; padding-block:0 110px}
+.wrap{max-width:1320px; margin:0 auto}
+.intro{display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:24px; align-items:end; padding-block:28px 18px}
+.intro h1{font-family:var(--f-head); font-weight:800; font-size:clamp(26px,3.6vw,38px); line-height:1.08; letter-spacing:-.015em; margin:0; text-wrap:balance}
+.intro p{color:var(--muted); margin:10px 0 0; max-width:62ch}
+.stats{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border:1px solid var(--line); border-radius:12px; background:var(--surface); overflow:hidden}
+.stat{padding:12px 14px; border-left:1px solid var(--line)}
+.stat:first-child{border-left:0}
+.stat .v{font-family:var(--f-head); font-weight:800; font-size:22px; font-variant-numeric:tabular-nums}
+.stat .k{font-size:11.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em}
+.tools{position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--bg); padding-block:10px; border-bottom:1px solid var(--line)}
+.filters{display:grid; grid-template-columns:minmax(0,1fr) 230px 200px; gap:10px}
+.filters.desk{grid-template-columns:minmax(0,1fr) 220px 200px 190px}
+.search{position:relative}
+.search svg{position:absolute; left:14px; top:50%; transform:translateY(-50%); width:18px; height:18px; color:var(--muted)}
+input[type=search],select{width:100%; font:inherit; color:var(--ink); background:var(--surface); border:1.5px solid var(--line-strong); border-radius:10px}
+input[type=search]{padding:12px 14px 12px 42px; font-size:16px}
+select{padding:11px 12px; font-size:14px}
+.chk{display:flex; align-items:center; gap:8px; font-size:13.5px; background:var(--surface); border:1.5px solid var(--line-strong); border-radius:10px; padding:0 12px}
+input:focus,select:focus,button:focus-visible{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent)}
+.chips{display:flex; gap:6px; overflow-x:auto; padding-block:10px 2px; scrollbar-width:thin}
+.chip{flex:none; font:inherit; font-size:13px; padding:6px 12px; border-radius:999px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink); cursor:pointer; white-space:nowrap}
+.chip .n{color:var(--muted); font-family:var(--f-mono); font-size:12px; margin-left:4px}
+.chip[aria-pressed="true"]{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+.chip[aria-pressed="true"] .n{color:inherit; opacity:.75}
+.count{margin:16px 0 8px; font-size:13.5px; color:var(--muted); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+.count b{color:var(--ink)}
+.linkbtn{font:inherit; font-size:13px; background:none; border:0; color:var(--accent); cursor:pointer; text-decoration:underline; padding:0}
+.ledger{background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden}
+.row{display:grid; gap:14px; align-items:start; padding:12px 16px; border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.cat .row, .row.c{grid-template-columns:24px 64px minmax(0,1fr) 190px 210px 92px}
+.row.c.cp{grid-template-columns:24px 64px minmax(0,1fr) 150px 196px 78px 124px}
+.price{font-family:var(--f-mono); font-weight:700; font-size:14.5px; text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+.price.ask{font-family:var(--f-body); font-weight:500; font-style:italic; color:var(--muted); font-size:13px}
+.row.d{grid-template-columns:24px 64px minmax(0,1fr) 250px 112px 112px 78px}
+.row.head{background:var(--accent-soft); font-size:11px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--accent); padding-block:10px}
+.group{padding:14px 16px 8px; border-top:1px solid var(--line); background:color-mix(in srgb, var(--accent-soft) 45%, var(--surface)); display:flex; align-items:baseline; gap:10px}
+.group:first-child{border-top:0}
+.group h3{font-family:var(--f-head); font-size:15px; font-weight:800; margin:0; letter-spacing:.01em}
+.group span{font-family:var(--f-mono); font-size:12px; color:var(--muted)}
+.no{font-family:var(--f-mono); font-size:12.5px; color:var(--muted); padding-top:2px}
+.pm{font-weight:600; font-size:15px; line-height:1.35}
+.pmeta{font-family:var(--f-mono); font-size:12px; color:var(--muted); margin-top:3px; word-break:break-word}
+.pd{font-size:13px; color:var(--muted); margin-top:3px}
+.pill{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; padding:3px 9px; border-radius:999px; line-height:1.3}
+.pill::before{content:""; width:7px; height:7px; border-radius:50%; background:currentColor; flex:none}
+.pill.ready{background:var(--okbg); color:var(--ok)} .pill.lead{background:var(--amberbg); color:var(--amber)} .pill.ask{background:var(--greybg); color:var(--muted)}
+.cond{font-size:13px}
+.sub{display:block; font-size:12.5px; color:var(--muted); margin-top:4px}
+.qty{font-family:var(--f-mono); font-size:13.5px; font-variant-numeric:tabular-nums}
+.lbl{display:none}
+mark{background:var(--mark); color:inherit; border-radius:3px; padding:0 1px}
+.pick{appearance:none; width:20px; height:20px; border:1.5px solid var(--line-strong); border-radius:6px; background:var(--surface); cursor:pointer; margin-top:2px; display:grid; place-items:center}
+.pick:checked{background:var(--accent); border-color:var(--accent)}
+.pick:checked::after{content:""; width:5px; height:10px; border:solid var(--accent-ink); border-width:0 2px 2px 0; transform:rotate(45deg) translate(-1px,-1px)}
+.row.sel{background:color-mix(in srgb, var(--accent) 6%, var(--surface))}
+.more{display:block; width:100%; font:inherit; font-weight:600; padding:13px; border:0; border-top:1px solid var(--line); background:var(--accent-soft); color:var(--accent); cursor:pointer}
+.empty{padding:44px 16px; text-align:center; color:var(--muted)}
+.terms{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:22px}
+.term{border-top:2px solid var(--accent); padding-top:10px}
+.term h4{margin:0 0 4px; font-family:var(--f-head); font-size:14px}
+.term p{margin:0; font-size:13.5px; color:var(--muted)}
+.foot{margin-top:22px; font-size:12.5px; color:var(--muted); border-top:1px solid var(--line); padding-top:12px}
+.basket{position:fixed; left:0; right:0; bottom:0; z-index:6; background:var(--band); color:var(--band-ink); padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+.basket .in{max-width:1320px; margin:0 auto; display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap}
+.basket button{font:inherit; font-weight:700; border:0; border-radius:8px; padding:10px 16px; cursor:pointer}
+.b-copy{background:var(--accent); color:var(--accent-ink)}
+.b-clear{background:transparent; color:var(--band-ink); border:1px solid color-mix(in srgb, var(--band-ink) 40%, transparent)!important}
+.copybox{width:100%; font-family:var(--f-mono); font-size:12.5px; min-height:120px; border-radius:8px; padding:10px; color:var(--ink); background:var(--surface); border:1px solid var(--line)}
+/* desk */
+.qpanel{position:fixed; left:0; right:0; bottom:0; z-index:8; max-height:86vh; overflow:auto; background:var(--surface); border-top:3px solid var(--accent); box-shadow:0 -12px 40px rgba(0,0,0,.18); padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.qin{max-width:1100px; margin:0 auto; display:grid; gap:12px}
+.qhead{display:flex; justify-content:space-between; align-items:center; gap:12px}
+.qhead h2{margin:0; font-family:var(--f-head); font-size:20px}
+.qfields{display:grid; grid-template-columns:1.2fr 1fr 1.4fr; gap:10px}
+.qfields label, .qlbl{display:grid; gap:4px; font-size:12px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.06em}
+.qin input[type=text], .qin input[inputmode], .qin textarea{font:inherit; font-size:14px; color:var(--ink); background:var(--bg); border:1.5px solid var(--line-strong); border-radius:8px; padding:9px 10px; width:100%; text-transform:none; letter-spacing:0; font-weight:400}
+.ql{display:grid; grid-template-columns:minmax(0,1fr) 96px 130px 150px 32px; gap:10px; align-items:center; padding:10px 0; border-top:1px solid var(--line)}
+.qp .pm{font-size:14px}
+.qcost{display:block; font-size:12px; color:var(--muted); margin-top:3px}
+.qlt{text-align:right; font-family:var(--f-mono); font-weight:600; font-size:14px}
+.qlt small{display:block; font-weight:500; font-size:12px}
+.qx{font:inherit; font-size:18px; line-height:1; width:30px; height:30px; border-radius:8px; border:1px solid var(--line-strong); background:var(--bg); color:var(--muted); cursor:pointer}
+.qtot{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:8px 24px; border-top:2px solid var(--ink); padding-top:10px; font-family:var(--f-mono)}
+.qtot b{font-size:17px}
+.qact{display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end}
+.qact button{font:inherit; font-weight:700; border-radius:8px; padding:10px 16px; cursor:pointer}
+.qbtn2{background:transparent; color:var(--ink); border:1.5px solid var(--line-strong)}
+.qmsg{font-size:13px; color:var(--muted)}
+.qstart{font:inherit; font-size:13px; font-weight:700; color:var(--accent-ink); background:var(--accent); border:0; border-radius:8px; padding:7px 12px; cursor:pointer}
+.dir{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:10px; margin-top:10px}
+.sup{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 14px; display:grid; gap:5px; align-content:start}
+.sup .nm{font-family:var(--f-head); font-weight:800; font-size:16px}
+.sup .ph{font-family:var(--f-mono); font-size:14px}
+.sup .ph.missing{color:var(--amber); font-family:var(--f-body); font-size:13px; font-weight:600}
+.sup .ct{font-size:12.5px; color:var(--muted)}
+.sup button{justify-self:start; font:inherit; font-size:13px; font-weight:600; color:var(--accent); background:var(--chip); border:1px solid var(--line); border-radius:8px; padding:5px 10px; cursor:pointer; margin-top:4px}
+.sup.unknown{border-style:dashed}
+details.panel{margin-top:18px; background:transparent}
+details.panel > summary{cursor:pointer; font-family:var(--f-head); font-weight:800; font-size:18px; list-style:none}
+details.panel > summary::-webkit-details-marker{display:none}
+details.panel > summary::before{content:"▸ "; color:var(--accent)}
+details.panel[open] > summary::before{content:"▾ "}
+.srcs{display:grid; gap:6px}
+.src{font-size:13px}
+.src .co{font-weight:700}
+.src .pr{font-family:var(--f-mono); font-variant-numeric:tabular-nums}
+.src .qn{color:var(--muted); font-size:12px}
+.src.off{opacity:.6}
+.src.unk .co{color:var(--amber)}
+.num{text-align:right; font-variant-numeric:tabular-nums}
+.sell{font-weight:800; font-size:15px; font-family:var(--f-mono)}
+.sell small{display:block; font-family:var(--f-body); font-weight:600; font-size:11px; color:var(--amber)}
+.ask{font-style:italic; color:var(--muted)}
+.pos{color:var(--ok); font-weight:700; font-family:var(--f-mono)} .neg{color:var(--bad); font-weight:700; font-family:var(--f-mono)}
+.pct{display:block; font-size:12px; font-weight:500}
+.warn{display:inline-block; margin-top:6px; font-size:12px; font-weight:600; color:var(--amber); background:var(--amberbg); padding:2px 8px; border-radius:6px}
+.warn.bad{color:var(--bad); background:var(--badbg)}
+details.why{margin-top:6px; font-size:12.5px; color:var(--muted)}
+details.why summary{cursor:pointer; color:var(--accent); font-weight:600}
+details.why .en{display:block; margin-top:4px; font-size:12px; opacity:.85}
+@media (max-width:960px){
+  .intro{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stat:nth-child(3){border-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+  .tools{position:static}
+  .filters,.filters.desk{grid-template-columns:1fr 1fr}
+  .search{grid-column:1/-1}
+  .row.head{display:none}
+  .row.c, .row.c.cp{grid-template-columns:24px minmax(0,1fr); grid-template-areas:"pick prod" "pick meta"; gap:6px 12px}
+  .row.c .pickc{grid-area:pick} .row.c .prod{grid-area:prod} .row .no{display:none}
+  .row.c .meta{grid-area:meta; display:flex; flex-wrap:wrap; gap:6px 16px; align-items:center}
+  .row.c .price{font-size:15px} .row.c .price.ask{font-size:13px}
+  .row.d{grid-template-columns:24px minmax(0,1fr) auto; grid-template-areas:"pick prod sell" "pick src src" "pick meta meta"; gap:8px 12px}
+  .row.d .pickc{grid-area:pick} .row.d .prod{grid-area:prod}
+  .ql{grid-template-columns:minmax(0,1fr) 1fr 1fr; grid-template-areas:"p p x" "q pr lt"}
+  .ql .qp{grid-area:p} .ql .qx{grid-area:x; justify-self:end} .ql .qqf{grid-area:q} .ql .qprf{grid-area:pr} .ql .qlt{grid-area:lt}
+  .qfields{grid-template-columns:1fr} .row.d .srcs{grid-area:src} .row.d .sellc{grid-area:sell} .row.d .meta{grid-area:meta; display:flex; gap:16px; flex-wrap:wrap}
+  .lbl{display:inline; color:var(--muted); font-size:12px; margin-right:4px; font-family:var(--f-body); font-weight:400}
+  .num{text-align:left}
+  .terms{grid-template-columns:1fr}
+}
+@media (min-width:961px){ .row .meta{display:contents} }
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+</head>
+<body>
+<div class="band"><div class="in">
+  <div class="mark" lang="en"><b>POYRAZ</b><span>Technology Trading – FZCO</span></div>
+  <div class="right"><div class="lang" role="group" aria-label="Language"><button type="button" id="l-en" aria-pressed="true">EN</button><button type="button" id="l-tr" aria-pressed="false">TR</button></div></div>
+</div></div>
+<main><div class="wrap">
+  <section class="intro">
+    <div><h1 data-t="title"></h1><p data-t="lead"></p></div>
+    <div class="stats" id="stats"></div>
+  </section>
+  <div class="tools">
+    <div class="filters ">
+      <label class="search" for="q">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" autocomplete="off">
+      </label>
+      <select id="sel2"></select>
+      <select id="avail" hidden></select>
+      
+    </div>
+    <div class="chips" id="chips" role="group"></div>
+  </div>
+  
+  <div class="count"><span id="count"></span><span style="display:flex;gap:14px;align-items:center"><button class="linkbtn" id="reset" type="button" hidden></button></span></div>
+  <div class="ledger" id="ledger"></div>
+  <section class="terms" id="terms"></section>
+  <div class="foot" data-t="foot"></div>
+</div></main>
+<div class="basket" id="basket" hidden><div class="in">
+  <span id="bcount"></span>
+  <span style="display:flex;gap:8px;flex-wrap:wrap"><button class="b-clear" id="bclear" type="button"></button><button class="b-copy" id="bcopy" type="button"></button></span>
+  <textarea class="copybox" id="copybox" hidden readonly aria-label="Request"></textarea>
+</div></div>
+<script>
+const MODE = "wtb"; const PRICED = MODE === "pcatalog";
+const CATS = ["Graphics Cards – AI / Data Center", "Graphics Cards – Gaming", "Servers", "Processors (CPU) – Server", "Processors (CPU) – Desktop", "Memory (RAM) – Server DDR5", "Memory (RAM) – Server DDR4", "Memory (RAM) – Desktop & Laptop", "SSD – Server / Data Center", "SSD – PC & Memory Cards", "Hard Drives (HDD)", "Motherboards", "Laptops", "Desktops, Mini PCs & All-in-One", "Printers, Ink & Toner", "Screens, Storage & Other"], CAT_TR = {"Graphics Cards – AI / Data Center": "Ekran Kartları – Yapay Zekâ / Veri Merkezi", "Graphics Cards – Gaming": "Ekran Kartları – Oyun", "Servers": "Sunucular", "Processors (CPU) – Server": "İşlemciler (CPU) – Sunucu", "Processors (CPU) – Desktop": "İşlemciler (CPU) – Masaüstü", "Memory (RAM) – Server DDR5": "Bellek (RAM) – Sunucu DDR5", "Memory (RAM) – Server DDR4": "Bellek (RAM) – Sunucu DDR4", "Memory (RAM) – Desktop & Laptop": "Bellek (RAM) – Masaüstü ve Dizüstü", "SSD – Server / Data Center": "SSD – Sunucu / Veri Merkezi", "SSD – PC & Memory Cards": "SSD – PC ve Hafıza Kartları", "Hard Drives (HDD)": "Sabit Diskler (HDD)", "Motherboards": "Anakartlar", "Laptops": "Dizüstü Bilgisayarlar", "Desktops, Mini PCs & All-in-One": "Masaüstü, Mini PC ve All-in-One", "Printers, Ink & Toner": "Yazıcılar, Mürekkep ve Toner", "Screens, Storage & Other": "Ekranlar, Depolama ve Diğer"};
+const DATA = [{"i":"W-001","c":0,"b":"NVIDIA","m":"NVIDIA H200","p":"","d":"141GB HBM3e","k":"New","q":"Bulk","l":"","t":"","a":"ready"},{"i":"W-002","c":0,"b":"NVIDIA","m":"NVIDIA H100","p":"","d":"80GB","k":"New","q":"Bulk","l":"","t":"","a":"ready"},{"i":"W-003","c":0,"b":"NVIDIA","m":"NVIDIA RTX PRO 6000 Blackwell Server Edition 96GB","p":"900-2G153-0000-000","d":"96GB GDDR7","k":"New","q":"100","l":"","t":"","a":"ready"},{"i":"W-004","c":0,"b":"NVIDIA","m":"NVIDIA RTX PRO 6000 Blackwell Workstation Edition 96GB","p":"","d":"96GB GDDR7","k":"New","q":"60","l":"","t":"","a":"ask"},{"i":"W-005","c":0,"b":"NVIDIA","m":"NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition","p":"","d":"96GB GDDR7","k":"New","q":"Bulk","l":"","t":"","a":"ready"},{"i":"W-006","c":0,"b":"NVIDIA","m":"NVIDIA RTX PRO 6000D Blackwell Server Edition 84GB","p":"900-2G153-0030-000","d":"84GB GDDR7","k":"New","q":"Bulk","l":"","t":"","a":"ready"},{"i":"W-007","c":1,"b":"NVIDIA","m":"NVIDIA GeForce RTX 5090 32GB","p":"","d":"32GB GDDR7","k":"New","q":"Bulk","l":"","t":"","a":"ready"},{"i":"W-008","c":1,"b":"NVIDIA","m":"NVIDIA GeForce RTX 4090 24GB","p":"","d":"24GB GDDR6X","k":"New","q":"Bulk","l":"","t":"","a":"ready"},{"i":"W-009","c":1,"b":"","m":"GeForce RTX 5080 16GB","p":"","d":"Gigabyte / MSI / ASUS preferred · other brands welcome","k":"New","q":"Bulk","l":"","t":"","a":"ready"},{"i":"W-010","c":1,"b":"","m":"GeForce RTX 5070 Ti 16GB","p":"","d":"Gigabyte / MSI / ASUS preferred · other brands welcome","k":"New","q":"Bulk","l":"","t":"","a":"ready"},{"i":"W-011","c":1,"b":"","m":"GeForce RTX 5070 12GB","p":"","d":"Gigabyte / MSI / ASUS preferred · other brands welcome","k":"New","q":"Bulk","l":"","t":"","a":"ready"},{"i":"W-012","c":1,"b":"","m":"GeForce RTX 5060 Ti 16GB","p":"","d":"Gigabyte / MSI / ASUS preferred · other brands welcome","k":"New","q":"Bulk","l":"","t":"","a":"ready"},{"i":"W-013","c":1,"b":"","m":"GeForce RTX 5060 Ti 8GB","p":"","d":"Gigabyte / MSI / ASUS preferred · other brands welcome","k":"New","q":"Bulk","l":"","t":"","a":"ready"},{"i":"W-014","c":1,"b":"","m":"GeForce RTX 5060 8GB","p":"","d":"Gigabyte / MSI / ASUS preferred · other brands welcome","k":"New","q":"Bulk","l":"","t":"","a":"ready"},{"i":"W-015","c":1,"b":"","m":"GeForce RTX 3060 8GB","p":"","d":"Any brand","k":"New","q":"Any","l":"","t":"","a":"ask"},{"i":"W-016","c":5,"b":"Samsung","m":"Samsung 64GB DDR5-6400 RDIMM","p":"M321R8GA0EB2-CCPEC","d":"Sealed box","k":"New","q":"Full cartons","l":"","t":"","a":"ready"},{"i":"W-017","c":5,"b":"","m":"64GB DDR5-6400 RDIMM","p":"MDRR644QDBC2-3E000","d":"Sealed box","k":"New","q":"Full cartons","l":"","t":"","a":"ready"},{"i":"W-018","c":5,"b":"","m":"64GB DDR5-6400 RDIMM","p":"MDRR644QDBC2-3B000","d":"Sealed box","k":"New","q":"Full cartons","l":"","t":"","a":"ready"},{"i":"W-019","c":5,"b":"SK hynix","m":"SK hynix 256GB DDR5-5600 RDIMM","p":"HMCT14AGERA208N","d":"Original SK hynix box · COO Korea preferred · recent date code","k":"New","q":"1,000","l":"","t":"Delivery: Hong Kong","a":"ready"},{"i":"W-020","c":10,"b":"","m":"8TB 3.5″ surveillance HDD","p":"WD85PURZ / ST8000VX010 / MD10ADA800","d":"Any of these 3 models","k":"New","q":"3,000","l":"","t":"","a":"ready"},{"i":"W-022","c":14,"b":"Canon","m":"Canon PIXMA G3410 / G3416","p":"","d":"Ink-tank printer","k":"New","q":"Bulk","l":"","t":"","a":"ready"},{"i":"W-023","c":14,"b":"Canon","m":"Canon PIXMA GX6140","p":"","d":"Ink-tank printer","k":"New","q":"400","l":"","t":"","a":"ready"},{"i":"W-024","c":14,"b":"Epson","m":"Epson EcoTank L18050","p":"","d":"A3 photo ink-tank printer","k":"New","q":"15","l":"","t":"","a":"ask"},{"i":"W-021","c":15,"b":"ASUS","m":"ASUS ROG Rapture GT-AX6000 Wi-Fi 6 router","p":"GT-AX6000","d":"","k":"New","q":"40+","l":"","t":"Must be in UAE","a":"ask"}];
+const TR = {cond: {"Used": "İkinci el", "New": "Yeni", "New – Factory Sealed": "Yeni – Fabrika mühürlü", "New – Factory sealed": "Yeni – Fabrika mühürlü", "New / Tray": "Yeni / Tray", "New – Sealed": "Yeni – Mühürlü", "Pull (used, taken out of a server)": "Söküm (sunucudan çıkarılmış, kullanılmış)", "New – Original": "Yeni – Orijinal", "New pull (unused, from a new system)": "Yeni söküm (kullanılmamış, yeni sistemden)", "New – Tray": "Yeni – Tray", "Open box": "Açık kutu", "New – Individual box": "Yeni – Tekli kutu", "Refurbished (factory recertified)": "Yenilenmiş (fabrika onaylı)", "Factory sealed / Open box / Tray": "Fabrika mühürlü / Açık kutu / Tray", "New – Original HPE sealed": "Yeni – Orijinal HPE mühürlü", "New – Sealed pack": "Yeni – Mühürlü paket", "New – Original box": "Yeni – Orijinal kutu", "New – Never used, factory sealed": "Yeni – Hiç kullanılmamış, fabrika mühürlü", "New – Retail packed": "Yeni – Perakende paket", "New – individual packing": "Yeni – Tekli paket", "New – outer box open, modules sealed": "Yeni – Dış kutu açık, modüller mühürlü", "New – Factory sealed / individual box / open box": "Yeni – Fabrika mühürlü / tekli kutu / açık kutu", "Pull – never used": "Söküm – hiç kullanılmamış", "New – never used (some outer boxes opened by customs)": "Yeni – hiç kullanılmamış (bazı dış kutular gümrükte açıldı)", "New / Pull": "Yeni / Söküm", "New – Original sealed": "Yeni – Orijinal mühürlü", "New – Original factory packing": "Yeni – Orijinal fabrika paketi", "New – Never used": "Yeni – Hiç kullanılmamış", "New – Original SK hynix packaging": "Yeni – Orijinal SK hynix ambalajı", "Factory sealed / Tray": "Fabrika mühürlü / Tray", "New – Original packaging": "Yeni – Orijinal ambalaj", "New – Original sealed box": "Yeni – Orijinal mühürlü kutu"}, lead: {"Delivery: Hong Kong": "Teslimat: Hong Kong", "Must be in UAE": "BAE’de stokta olmalı", "1–2 weeks": "1–2 hafta", "Ready stock": "Hazır stok", "Lead time ~1 week": "Teslim süresi ~1 hafta", "Ready stock · EXW Türkiye": "Hazır stok · EXW Türkiye", "Lead time 1–2 weeks (supplied on order)": "Teslim süresi 1–2 hafta (siparişe göre)", "Arrives in ~1 week": "~1 haftada gelir", "Ready stock · EXW Dubai": "Hazır stok · EXW Dubai", "Ready stock · immediate shipment": "Hazır stok · hemen sevk", "Ready stock · immediate dispatch": "Hazır stok · hemen sevk", "Arrives in 2–3 weeks": "2–3 haftada gelir", "Delivery in Dubai · full payment": "Teslimat Dubai'de · tam ödeme", "In stock — ships after approval": "Stokta — onaydan sonra sevk", "After NVIDIA approval (a few weeks)": "NVIDIA onayından sonra (birkaç hafta)", "Ask for delivery date": "Teslim tarihini sorunuz", "Immediate shipment": "Hemen sevk", "Lead time 10 days": "Teslim süresi 10 gün", "EXW Korea": "EXW Kore", "EXW Miami · Arrives in 2 days": "EXW Miami · 2 günde gelir", "Lead time ~1 week · EXW Hong Kong": "Teslim süresi ~1 hafta · EXW Hong Kong", "Incoming": "Yolda", "Lead time 2–3 weeks": "Teslim süresi 2–3 hafta", "18 pcs ready, 50 more in 2–4 weeks": "18 adet hazır, 50 adet 2–4 haftada"}, loc: {"USA": "ABD", "China": "Çin", "Hong Kong": "Hong Kong", "Türkiye": "Türkiye", "Dubai": "Dubai", "UAE (Dubai)": "BAE (Dubai)", "Bulgaria / Türkiye": "Bulgaristan / Türkiye", "USA → Dubai": "ABD → Dubai", "Europe": "Avrupa", "Türkiye (İstanbul)": "Türkiye (İstanbul)", "Türkiye (free zone)": "Türkiye (serbest bölge)", "Europe (EXW Hong Kong)": "Avrupa (EXW Hong Kong)", "Korea": "Kore", "USA (Miami)": "ABD (Miami)", "Bulgaria": "Bulgaristan"}, qty: {"Bulk": "Toplu", "Any": "Her adet", "Full cartons": "Tam koli", "Ask": "Sorunuz", "Large stock": "Büyük stok", "Up to 1,000": "1.000 adede kadar", "Up to 500": "500 adede kadar", "50+ (both models)": "50+ (iki model)", "100 sets": "100 set", "30 sets": "30 set", "200 servers": "200 sunucu"}, chk: {}};
+
+const T = {"en": {"search": "Search by product, brand, model, part number or size", "reset": "Clear filters", "allgroups": "All products", "allbrands": "All brands", "av_all": "All availability", "av_ready": "Ready stock", "av_lead": "Lead time", "av_ask": "Ask / to confirm", "av_ask_short": "Ask", "h_no": "No", "h_prod": "Product", "h_cond": "Condition", "h_avail": "Delivery / note", "h_qty": "Qty needed", "products_l": "products", "st_products": "Products wanted", "st_groups": "Product groups", "st_ready": "Bulk requests", "st_brands": "Brands", "shipsfrom": "Ships from", "empty": "No products match your search. Try one word, a model number (for example 5090) or a part number.", "showing": "Showing {a} of {b} products", "more": "Show {n} more ({left} left)", "title": "Wanted to Buy", "lead": "Products we are buying now for our customers — brand new, in original packaging. Select the products you can supply and send us your offer with price, quantity, location and delivery time. We reply the same day.", "bcopy": "Copy offer message", "bclear": "Clear", "bcopied": "Copied ✓", "bselect": "Select and copy the text below", "selected": "{n} selected", "qtyneeded": "Qty needed", "req_hello": "Hello Poyraz Technology,", "req_intro": "We can supply the following:", "req_thanks": "Best regards,", "foot": "Poyraz Technology Trading – FZCO · Dubai, UAE · Wanted-to-buy list. We reply to every offer the same day.", "terms": [["What we buy", "Brand new products in original packaging. No used or refurbished goods unless stated."], ["Your offer", "Tick the products you have, press “Copy offer message”, fill in price per piece (USD), quantity, location and delivery time, and send it to us. Label photos help."], ["Quantities", "We buy in bulk — full cartons and larger quantities preferred. “Bulk” = as many as you can supply."]], "yourprice": "Price / pc (USD)", "yourqty": "Qty", "yourloc": "Location", "yourlead": "Delivery time"}, "tr": {"search": "Ürün, marka, model, parça numarası veya kapasite ile arayın", "reset": "Filtreleri temizle", "allgroups": "Tüm ürünler", "allbrands": "Tüm markalar", "av_all": "Tüm durumlar", "av_ready": "Hazır stok", "av_lead": "Teslim süreli", "av_ask": "Sorunuz / teyit edilecek", "av_ask_short": "Sorunuz", "h_no": "No", "h_prod": "Ürün", "h_cond": "Durum", "h_avail": "Teslimat / not", "h_qty": "İstenen adet", "products_l": "ürün", "st_products": "İstenen ürün", "st_groups": "Ürün grubu", "st_ready": "Toplu alım", "st_brands": "Marka", "shipsfrom": "Çıkış yeri:", "empty": "Aramanıza uygun ürün bulunamadı. Tek kelime, model numarası (örneğin 5090) veya parça numarası deneyin.", "showing": "{b} üründen {a} tanesi gösteriliyor", "more": "{n} ürün daha göster ({left} kaldı)", "title": "Almak İstediğimiz Ürünler", "lead": "Müşterilerimiz için şu an satın aldığımız ürünler — sıfır, orijinal ambalajında. Tedarik edebileceğiniz ürünleri seçip fiyat, adet, bulunduğu yer ve teslim süresiyle teklifinizi gönderin. Aynı gün dönüş yaparız.", "bcopy": "Teklif mesajını kopyala", "bclear": "Temizle", "bcopied": "Kopyalandı ✓", "bselect": "Aşağıdaki metni seçip kopyalayın", "selected": "{n} ürün seçildi", "qtyneeded": "İstenen adet", "req_hello": "Merhaba Poyraz Technology,", "req_intro": "Aşağıdaki ürünleri tedarik edebiliriz:", "req_thanks": "Saygılarımızla,", "foot": "Poyraz Technology Trading – FZCO · Dubai, BAE · Almak istediğimiz ürünler listesi. Her teklife aynı gün dönüş yaparız.", "terms": [["Ne alıyoruz", "Orijinal ambalajında sıfır ürünler. Aksi belirtilmedikçe kullanılmış veya yenilenmiş ürün almıyoruz."], ["Teklifiniz", "Elinizdeki ürünleri işaretleyin, “Teklif mesajını kopyala”ya basın; adet fiyatı (USD), adet, bulunduğu yer ve teslim süresini yazıp bize gönderin. Etiket fotoğrafları işimizi kolaylaştırır."], ["Adetler", "Toplu alım yapıyoruz — tam koli ve yüksek adetler tercih edilir. “Toplu” = tedarik edebileceğiniz kadar."]], "yourprice": "Adet fiyatı (USD)", "yourqty": "Adet", "yourloc": "Bulunduğu yer", "yourlead": "Teslim süresi"}};
+let L = 'en';
+try { const h = (location.hash || '').slice(1); const s = localStorage.getItem('poyraz-lang');
+  L = (h === 'tr' || h === 'en') ? h : (s === 'tr' || s === 'en') ? s : ((navigator.language || '').toLowerCase().startsWith('tr') ? 'tr' : 'en'); } catch (e) {}
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const t = k => (T[L][k] ?? T.en[k] ?? k);
+const tx = (kind, v) => L === 'tr' ? (TR[kind][v] ?? v) : v;
+const cname = i => L === 'tr' ? CAT_TR[CATS[i]] : CATS[i];
+const usd = n => 'USD ' + Math.round(n).toLocaleString(L === 'tr' ? 'tr-TR' : 'en-US');
+DATA.forEach(r => {
+  r.names = [];
+  r.h = [r.i, CATS[r.c], CAT_TR[CATS[r.c]], r.b, r.m, r.p, r.d, r.k, TR.cond[r.k] || '', r.q, r.l, TR.loc[r.l] || '', r.t, TR.lead[r.t] || '', r.names.join(' ')].join(' ').toLowerCase();
+});
+let cat = '', limit = 160;
+const picked = new Set();
+function hl(text, toks){
+  let s = esc(text); if (!toks.length || !s) return s;
+  const re = new RegExp('(' + toks.map(x => esc(x).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'gi');
+  return s.replace(re, '<mark>$1</mark>');
+}
+function staticText(){
+  document.documentElement.lang = L;
+  document.querySelectorAll('[data-t]').forEach(e => e.innerHTML = t(e.dataset.t));
+  $('#q').placeholder = t('search'); $('#q').setAttribute('aria-label', t('search'));
+  $('#reset').textContent = t('reset');
+  $('#l-en').setAttribute('aria-pressed', L === 'en'); $('#l-tr').setAttribute('aria-pressed', L === 'tr');
+  const a = $('#avail').value; $('#avail').innerHTML = ['', 'ready', 'lead', 'ask'].map(v => `<option value="${v}">${t('av_' + (v || 'all'))}</option>`).join(''); $('#avail').value = a;
+  const s2 = $('#sel2').value;
+  {
+    const brands = [...new Set(DATA.map(r => r.b).filter(Boolean))].sort((x, y) => x.localeCompare(y));
+    $('#sel2').innerHTML = `<option value="">${t('allbrands')}</option>` + brands.map(b => `<option>${esc(b)}</option>`).join('');
+    $('#bclear').textContent = t('bclear');
+  }
+  $('#sel2').value = s2; $('#sel2').setAttribute('aria-label', t('allbrands'));
+  $('#terms').innerHTML = T[L].terms.map(([h, p]) => `<div class="term"><h4>${h}</h4><p>${p}</p></div>`).join('');
+  stats(); chips(); basket();
+}
+function stats(){
+  let v;
+  {
+    v = [[DATA.length, t('st_products')], [new Set(DATA.map(r => r.c)).size, t('st_groups')], [DATA.filter(r => r.a === 'ready').length, t('st_ready')], [new Set(DATA.map(r => r.b).filter(Boolean)).size, t('st_brands')]];
+  }
+  $('#stats').innerHTML = v.map(([n, k]) => `<div class="stat"><div class="v">${n.toLocaleString(L === 'tr' ? 'tr-TR' : 'en-US')}</div><div class="k">${k}</div></div>`).join('');
+}
+function chips(){
+  const counts = CATS.map((_, i) => DATA.filter(r => r.c === i).length);
+  $('#chips').innerHTML = `<button class="chip" type="button" data-c="" aria-pressed="${cat === ''}">${t('allgroups')}<span class="n">${DATA.length}</span></button>` +
+    CATS.map((_, i) => counts[i] ? `<button class="chip" type="button" data-c="${i}" aria-pressed="${cat === String(i)}">${esc(cname(i))}<span class="n">${counts[i]}</span></button>` : '').join('');
+}
+function availPill(r){ if (MODE === 'wtb') return r.t ? `<span class="pill lead">${esc(tx('lead', r.t))}</span>` : '<span class="pd" style="margin:0">—</span>';
+  return `<span class="pill ${r.a}">${esc(r.t ? tx('lead', r.t) : t('av_ask_short'))}</span>`; }
+function render(){
+  const toks = $('#q').value.toLowerCase().split(/\s+/).filter(Boolean);
+  const s2 = $('#sel2').value, av = $('#avail').value, w = false;
+  const res = DATA.filter(r => (cat === '' || r.c === +cat) && (av === '' || r.a === av) &&
+    (s2 === '' || (r.b === s2)) && (!w || r.chk !== 'OK') && toks.every(x => r.h.includes(x)));
+  const head = `<div class="row c${PRICED ? ' cp' : ''} head"><span></span><span>${t('h_no')}</span><span>${t('h_prod')}</span><span>${t('h_cond')}</span><span>${t('h_avail')}</span><span>${t('h_qty')}</span>${PRICED ? `<span style="text-align:right">${t('h_price')}</span>` : ''}</div>`;
+  let out = '', last = -1;
+  res.slice(0, limit).forEach(r => {
+    if (r.c !== last) { last = r.c; const n = res.filter(x => x.c === r.c).length;
+      out += `<div class="group"><h3>${esc(cname(r.c))}</h3><span>${n} ${t('products_l')}</span></div>` + head; }
+    const meta = [r.b, r.p ? 'P/N ' + r.p : ''].filter(Boolean).join(' · ');
+    const prod = `<div class="pm">${hl(r.m, toks)}</div>${meta ? `<div class="pmeta">${hl(meta, toks)}</div>` : ''}${r.d ? `<div class="pd">${hl(r.d, toks)}</div>` : ''}`;
+    {
+      out += `<div class="row c${PRICED ? ' cp' : ''}${picked.has(r.i) ? ' sel' : ''}">
+        <span class="pickc"><input class="pick" type="checkbox" id="p-${r.i}" data-id="${r.i}" ${picked.has(r.i) ? 'checked' : ''} aria-label="${esc(r.m)}"></span>
+        <span class="no">${r.i}</span>
+        <div class="prod">${prod}</div>
+        <div class="meta">
+          <span class="cond"><span class="lbl">${t('h_cond')}</span>${esc(r.k ? tx('cond', r.k) : '—')}</span>
+          <span>${availPill(r)}${r.l ? `<span class="sub">${t('shipsfrom')} ${esc(tx('loc', r.l))}</span>` : ''}</span>
+          <span class="qty"><span class="lbl">${t('h_qty')}</span>${esc(tx('qty', r.q) || '—')}</span>
+          ${PRICED ? (r.s != null ? `<span class="price"><span class="lbl">${t('h_price')}</span>${usd(r.s)}</span>` : `<span class="price ask">${t('onreq')}</span>`) : ''}
+        </div></div>`;
+    }
+  });
+  const more = res.length > limit ? `<button class="more" id="more" type="button">${t('more').replace('{n}', Math.min(160, res.length - limit)).replace('{left}', res.length - limit)}</button>` : '';
+  $('#ledger').innerHTML = res.length ? out + more : `<div class="empty">${t('empty')}</div>`;
+  $('#count').innerHTML = t('showing').replace('{a}', `<b>${Math.min(res.length, limit)}</b>`).replace('{b}', `<b>${res.length}</b>`);
+  $('#reset').hidden = !($('#q').value || cat !== '' || s2 !== '' || av !== '' || w);
+  const m = $('#more'); if (m) m.onclick = () => { limit += 160; render(); };
+}
+function basket(){
+  
+  const n = picked.size; $('#basket').hidden = n === 0;
+  $('#bcount').textContent = t('selected').replace('{n}', n);
+  $('#bcopy').textContent = t('bcopy');
+}
+function requestText(){
+  if (MODE === 'wtb') {
+    const wl = DATA.filter(r => picked.has(r.i)).map(r => `- ${r.i} · ${r.m}${r.p ? ' · P/N ' + r.p : ''}\n  ${t('yourprice')}: ___ · ${t('yourqty')}: ___ · ${t('yourloc')}: ___ · ${t('yourlead')}: ___`);
+    return t('req_hello') + '\n\n' + t('req_intro') + '\n' + wl.join('\n') + '\n\n' + t('req_thanks');
+  }
+  const lines = DATA.filter(r => picked.has(r.i)).map(r => `- ${r.i} · ${r.m}${r.p ? ' · P/N ' + r.p : ''}${PRICED ? ' · ' + (r.s != null ? usd(r.s) : t('onreq')) : ''} · ${t('qtyneeded')}: ___`);
+  return t('req_hello') + '\n\n' + t('req_intro') + '\n' + lines.join('\n') + '\n\n' + t('req_thanks');
+}
+
+
+function setLang(x){ L = x; try { localStorage.setItem('poyraz-lang', x); } catch (e) {} staticText(); render();  }
+$('#l-en').onclick = () => setLang('en'); $('#l-tr').onclick = () => setLang('tr');
+let tm; $('#q').addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(() => { limit = 160; render(); }, 80); });
+['#sel2', '#avail'].forEach(s => $(s).addEventListener('change', () => { limit = 160; render(); }));
+{
+  $('#ledger').addEventListener('change', e => { const id = e.target.dataset && e.target.dataset.id; if (!id) return;
+    e.target.checked ? picked.add(id) : picked.delete(id); e.target.closest('.row').classList.toggle('sel', e.target.checked);
+    $('#copybox').hidden = true; basket(); });
+  $('#bclear').addEventListener('click', () => { picked.clear(); $('#copybox').hidden = true; basket(); render(); });
+  $('#bcopy').addEventListener('click', () => { const txt = requestText(), box = $('#copybox'); box.value = txt;
+    const show = () => { box.hidden = false; box.focus(); box.select(); $('#bcopy').textContent = t('bselect'); };
+    try { navigator.clipboard.writeText(txt).then(() => { $('#bcopy').textContent = t('bcopied'); setTimeout(() => $('#bcopy').textContent = t('bcopy'), 1800); }, show); } catch (e) { show(); } });
+}
+$('#chips').addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; cat = b.dataset.c; chips(); limit = 160; render(); });
+$('#reset').addEventListener('click', () => { $('#q').value = ''; cat = ''; $('#sel2').value = ''; $('#avail').value = ''; chips(); limit = 160; render(); });
+staticText(); render(); 
+</script>
+
+</body>
+</html>
