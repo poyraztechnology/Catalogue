@@ -257,10 +257,11 @@ const usd = n => 'USD ' + Math.round(n).toLocaleString(L === 'tr' ? 'tr-TR' : 'e
 /* search: any word, EN or TR, with or without Turkish letters, spaces or dashes (“rtx5080” = “RTX 5080”, “ecc” finds RDIMM) */
 const nz = s => String(s ?? '').toLocaleLowerCase('tr').replace(/[ıi̇]/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[âà]/g, 'a').replace(/[″“”"]/g, ' ');
 const cz = s => s.replace(/[\s\-_.\/·,()+:]+/g, '');
-const SYN = [[/\b(l?rdimm|registered)\b/, 'ecc registered rdimm server sunucu ram memory bellek'], [/\b(ddr[345]|dimm|sodimm|udimm)\b/, 'ram memory bellek'],
+const SYN = [[/\b(l?rdimm|registered)\b/, 'ecc registered rdimm server sunucu ram memory bellek'], [/\b(dimm|sodimm|udimm)\b/, 'ram memory bellek'],
   [/\b(ssd|nvme|u\.2|m\.2)\b/, 'ssd disk storage depolama'], [/\b(hdd|exos|ironwolf|barracuda|skyhawk)\b|hard ?drive/, 'hdd harddisk hard disk sabit disk storage depolama'],
   [/\b(rtx|geforce|radeon|quadro|gpu)\b|\brx ?\d{4}|\b(h100|h200|l40s|l4|a100|b200|b300)\b/, 'gpu ekran karti graphics card vga'],
-  [/\b(xeon|epyc|threadripper|ryzen|core i\d|core ultra|cpu)\b/, 'cpu islemci processor'], [/\b(monitor|display)\b/, 'monitor ekran display'],
+  [/\b(rtx|gtx|gt) ?\d{3,4}(?!\d)/, 'geforce nvidia'], [/\b(quadro|tesla|h100|h200|h20|l40s|l4|a100|b200|b300|rtx pro|rtx a\d{3,4})\b/, 'nvidia'],
+  [/\brx ?\d{4}|\bradeon\b/, 'radeon amd'], [/\barc ?[ab]\d{3}|\b[ab][357][578]0\b/, 'intel arc'], [/\b(monitor|display)\b/, 'monitor ekran display'],
   [/\b(router|mesh|wi-?fi|starlink)\b/, 'router modem wifi ag network internet'], [/\b(airpods|headphone|earbuds|echo dot)\b/, 'kulaklik headphone ses audio'],
   [/\b(playstation|ps5|xbox|nintendo|vr2)\b/, 'konsol console oyun game'], [/\b(iphone|ipad|tablet)\b/, 'telefon phone tablet'],
   [/\b(macbook|laptop|notebook|thinkpad|vivobook|zenbook|omnibook|elitebook|ideapad|latitude)\b/, 'laptop notebook dizustu bilgisayar computer'],
@@ -270,16 +271,20 @@ function hay(core, more){   /* synonyms come only from the product itself (not f
   SYN.forEach(([re, w]) => { if (re.test(s)) extra += ' ' + w; });
   const h = s + ' ' + extra + ' ' + nz((more || []).join(' ')); return [h, cz(h), s + ' ' + extra, cz(s + ' ' + extra)];
 }
-const tokens = v => nz(v).split(/\s+/).filter(Boolean);
+const tokens = v => nz(v).split(/\s+/).filter(Boolean).reduce((a, x) => {   /* “5070 ti”, “64 gb” → “5070ti”, “64gb” */
+  if (a.length && /^[a-z]{1,2}$/.test(x) && /\d$/.test(a[a.length - 1])) a[a.length - 1] += x; else a.push(x); return a; }, []);
 const NUMRE = {};
-const hit = (r, toks) => toks.every(x => /^\d+$/.test(x)
-  ? (NUMRE[x] || (NUMRE[x] = new RegExp('(^|\\D)' + x + '(?!\\d)'))).test(r.h)
-  : (r.h.includes(x) || r.hc.includes(cz(x))));
+const reOf = x => NUMRE[x] || (NUMRE[x] = /^\d+$/.test(x) ? new RegExp('(^|[^0-9.])' + x + '(?!\\d)')     /* 37 ≠ 370, 2 ≠ 1.92 */
+  : x.length <= 2 ? new RegExp('(^|[^a-z0-9])' + x + '(?![a-z0-9])')                                                       /* ti, oc, lp: whole word */
+  : /^\d/.test(x) ? new RegExp('(^|[^0-9.])' + x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))                                 /* 2tb ≠ 1.92tb */
+  : /^[a-z]{3}$/.test(x) ? new RegExp('(^|[^a-z0-9])' + x) : null);                                                    /* arc ≠ search */
+const hit = (r, toks) => toks.every(x => { const re = reOf(x);
+  return re ? (re.test(r.h) || (/^\d/.test(x) && x.length > 2 && !/^\d+$/.test(x) && re.test(r.hc))) : (r.h.includes(x) || r.hc.includes(cz(x))); });
 DATA.forEach(r => {
   r.names = [];
-  [r.h, r.hc] = hay([CATS[r.c], r.b, r.m, r.p, r.d], [r.i, CAT_TR[CATS[r.c]], CW[CATS[r.c]] || '', r.k, TR.cond[r.k] || '', r.l, TR.loc[r.l] || '', r.t, TR.lead[r.t] || '', r.names.join(' '), r.w || '', r.n || '']);
+  [r.h, r.hc] = hay([CATS[r.c], r.b, r.m, r.p], [r.d, r.i, CAT_TR[CATS[r.c]], CW[CATS[r.c]] || '', r.k, TR.cond[r.k] || '', r.l, TR.loc[r.l] || '', r.t, TR.lead[r.t] || '', r.names.join(' '), r.w || '', r.n || '']);
 });
-XD.forEach(r => { let a; [r.h, r.hc, ...a] = hay([CATS[r.c], r.b, r.m, r.p, r.d], [r.i, CAT_TR[CATS[r.c]], CW[CATS[r.c]] || '', r.k, r.t, (r.sup || []).join(' '), r.w || '', r.n || '']);
+XD.forEach(r => { let a; [r.h, r.hc, ...a] = hay([CATS[r.c], r.b, r.m, r.p], [r.d, r.i, CAT_TR[CATS[r.c]], CW[CATS[r.c]] || '', r.k, r.t, (r.sup || []).join(' '), r.w || '', r.n || '']);
   r.core = {h: a[0], hc: a[1]}; const nm = nz([r.b, r.m, r.p].join(' ')); r.name = {h: nm, hc: cz(nm)}; });
 function xmatch(toks){
   const box = $('#xmatch'); if (!box) return;
