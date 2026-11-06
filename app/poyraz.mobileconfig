@@ -558,6 +558,6 @@
 	<key>PayloadUUID</key>
 	<string>6864336F-2108-4071-A7A0-524CD06D9132</string>
 	<key>PayloadVersion</key>
-	<integer>3</integer>
+	<integer>1</integer>
 </dict>
 </plist>
