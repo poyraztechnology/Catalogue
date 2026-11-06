@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Katalogları Güncelle · Poyraz</title>
+<style>
+  body { margin: 0; font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5efe4; color: #3a3125; }
+  .card { max-width: 520px; margin: 64px auto; background: #fffaf1; border: 1px solid #e2d5bd; border-radius: 14px; padding: 26px 28px; }
+  h1 { font-size: 20px; margin: 0 0 6px; }
+  p { margin: 8px 0; }
+  .small { font-size: 13px; color: #7a6a52; }
+  .pick { display: block; margin: 16px 0 6px; padding: 14px; border: 1px dashed #c8b48f; border-radius: 10px; background: #fbf5ea; }
+  .pick input { display: block; margin-top: 8px; font: inherit; }
+  .bad { color: #9b3b23; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Katalogları Güncelle</h1>
+  <p id="msg">Açılıyor…</p>
+  <label class="pick" id="pickBox" hidden>Araç dosyasını seçin: <b>5 - KATALOGLARI GÜNCELLE.html</b> (Masaüstü › POYRAZ LİNKLER)
+    <input type="file" id="toolIn" accept=".html,text/html">
+  </label>
+  <p class="small" id="note" hidden>Dosya yalnızca bu tarayıcıda saklanır, internete yüklenmez. Bir kez seçmeniz yeter.</p>
+</div>
+<script>
+(function () {
+  'use strict';
+  var DBN = 'poyraz-host', KEY = 'tool';
+  function db() {
+    return new Promise(function (res, rej) {
+      var r = indexedDB.open(DBN, 1);
+      r.onupgradeneeded = function () { r.result.createObjectStore('kv'); };
+      r.onsuccess = function () { res(r.result); };
+      r.onerror = function () { rej(r.error); };
+    });
+  }
+  function get() {
+    return db().then(function (d) {
+      return new Promise(function (res) {
+        var q = d.transaction('kv').objectStore('kv').get(KEY);
+        q.onsuccess = function () { res(q.result || null); };
+        q.onerror = function () { res(null); };
+      });
+    }).catch(function () { return null; });
+  }
+  function put(v) {
+    return db().then(function (d) {
+      return new Promise(function (res, rej) {
+        var tx = d.transaction('kv', 'readwrite');
+        tx.objectStore('kv').put(v, KEY);
+        tx.oncomplete = function () { res(); };
+        tx.onerror = function () { rej(tx.error); };
+      });
+    });
+  }
+  function sha(text) {
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(function (b) {
+      return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    });
+  }
+  function valid(html) {
+    var has = function (a, b) { return html.indexOf(a + b) > 0; };   /* split so this page never matches itself */
+    return has('window.__poy', 'raz = {') && has('async function publish', 'Online(O, c)') &&
+           has('async function saveTo', 'Folder()') && html.lastIndexOf('</body>') > 0 && !has('poyraz-', 'host');
+  }
+  function store(file) {
+    return file.text().then(function (html) {
+      if (!valid(html)) throw new Error('wrong');
+      return sha(html).then(function (h) {
+        return put({html: html, name: file.name, size: file.size, sha: h, at: new Date().toISOString()});
+      });
+    });
+  }
+
+  /* Runs inside the tool page, after the tool's own scripts. Adds the "Otomatik" box. */
+  function panel(meta) {
+    var q = function (s) { return document.querySelector(s); };
+    var css = document.createElement('style');
+    css.textContent = '#hostPanel{background:#fbf5ea;border:1px solid #e2d5bd;border-radius:12px;padding:14px 16px;margin:0 0 18px}' +
+      '#hostPanel h2{font-size:16px;margin:0 0 8px}#hostPanel .hr{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:6px 0}' +
+      '#hostPanel .lb{min-width:120px;font-weight:600}#hostPanel .sm{font-size:12px;color:#7a6a52}' +
+      '#hostState{margin-top:8px;padding:8px 10px;border-radius:8px;background:#f3ead9}' +
+      '#hostState[data-state="ok"],#hostState[data-state="ok-online"]{background:#e6efd9;color:#2f5a1e}' +
+      '#hostState[data-state="bad"],#hostState[data-state="err"],#hostState[data-state="nocfg"]{background:#f6dfd6;color:#8a2e17}' +
+      '#hostRun{font:inherit;padding:8px 14px;border-radius:8px;border:0;background:#8a6a3a;color:#fff;cursor:pointer}' +
+      '#hostRun:disabled{opacity:.5;cursor:default}';
+    document.head.appendChild(css);
+    var box = document.createElement('section');
+    box.id = 'hostPanel';
+    var when = new Date(meta.at).toLocaleString('tr-TR', {day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'});
+    box.innerHTML = '<h2>İnternet sürümü</h2>' +
+      '<div class="hr"><span class="lb">1. Excel</span><input type="file" id="hostXlsx" accept=".xlsx"></div>' +
+      '<div class="hr"><span class="lb">2. Yayınla</span><button id="hostRun" type="button" disabled>İnternetteki linkleri güncelle</button></div>' +
+      '<div id="hostState" data-state="idle">Excel’i seçin.</div>' +
+      '<div class="hr sm">Araç dosyası: <span id="hostTool" data-sha="' + meta.sha + '">' + meta.name.replace(/[<>&"]/g, '') +
+      ' · ' + when + ' · ' + meta.sha.slice(0, 12) + '</span> — yenisi: <input type="file" id="hostToolIn" accept=".html,text/html"></div>';
+    var first = q('section.step');
+    first.parentNode.insertBefore(box, first);
+    var st = q('#hostState'), btn = q('#hostRun');
+    function set(k, t) {
+      st.dataset.state = k; st.textContent = t;
+      if (k === 'ok' || k === 'bad') try { localStorage.setItem('poyraz-host-last', JSON.stringify({state: k, text: t, at: new Date().toISOString()})); } catch (e) {}
+    }
+    function ready() {
+      var o = window.__poyraz.OUT;
+      btn.disabled = !o || o.M.err.length > 0;
+      if (!o) return;
+      if (o.M.err.length) set('err', 'Excel’de ' + o.M.err.length + ' kırmızı uyarı var. Yayınlanmadı; önce Excel’de düzeltin.');
+      else if (!getCfg()) set('nocfg', 'Excel okundu (' + o.file + '). İnternet ayarları henüz yapılmadı: aşağıda “Ayarlar”.');
+      else set('ready', 'Excel okundu (' + o.file + '). “İnternetteki linkleri güncelle”ye basın.');
+    }
+    q('#hostXlsx').addEventListener('change', function (e) {
+      var f = e.target.files[0]; e.target.value = '';
+      if (!f) return;
+      set('busy', 'Excel okunuyor…'); btn.disabled = true;
+      Promise.resolve(window.__poyraz.handleFile(f)).then(function () {
+        if (!window.__poyraz.OUT) { set('err', 'Excel okunamadı: ' + q('#readErr').textContent); return; }
+        ready();
+      });
+    });
+    btn.addEventListener('click', function () {
+      var o = window.__poyraz.OUT;
+      if (!o) return set('noexcel', 'Önce Excel’i seçin.');
+      if (o.M.err.length) return ready();
+      if (!getCfg()) return set('nocfg', 'İnternet ayarları henüz yapılmadı: aşağıda “Ayarlar”.');
+      btn.disabled = true; set('busy', 'İnternetteki linkler güncelleniyor…');
+      q('#pubToo').checked = true;
+      q('#result').innerHTML = '';
+      Promise.resolve(afterSave()).then(function () {
+        var res = q('#result'), bad = res.querySelector('.box.bad');
+        if (bad) return set('bad', 'Güncellenemedi: ' + bad.textContent);
+        if (!/İnternetteki linkler de güncellendi/.test(res.textContent)) return set('bad', 'Güncellenemedi (bilinmeyen hata).');
+        try {
+          localStorage.setItem('poyraz-last-quick', JSON.stringify(Object.fromEntries(o.M.products.filter(function (p) { return p.quick; })
+            .map(function (p) { return [p.no, p.price == null ? null : p.price]; }))));
+        } catch (e) {}
+        set('ok', '✓ İnternetteki linkler güncellendi — ' + stamp() + ' (' + o.file + ')');
+      }).catch(function (e) { set('bad', 'Güncellenemedi: ' + e.message); })
+        .then(function () { btn.disabled = !window.__poyraz.OUT || window.__poyraz.OUT.M.err.length > 0; });
+    });
+    q('#hostToolIn').addEventListener('change', function (e) {
+      var f = e.target.files[0]; e.target.value = '';
+      if (!f) return;
+      set('busy', 'Araç dosyası kaydediliyor…');
+      window.__poyrazHost.store(f).then(function () { location.reload(); })
+        .catch(function () { set('bad', 'Bu dosya “5 - KATALOGLARI GÜNCELLE.html” değil.'); });
+    });
+    try {
+      var last = JSON.parse(localStorage.getItem('poyraz-host-last') || 'null');
+      if (last && last.state === 'ok') q('#hostPanel .sm').insertAdjacentHTML('beforeend', '<br>Son güncelleme: ' + new Date(last.at).toLocaleString('tr-TR'));
+    } catch (e) {}
+  }
+
+  function open(rec) {
+    var meta = JSON.stringify({name: rec.name, sha: rec.sha, at: rec.at}).replace(/</g, '\\u003c');
+    var code = '<script>(' + panel.toString() + ')(' + meta + ');<\/script>\n';
+    var i = rec.html.lastIndexOf('</body>');
+    window.__poyrazHost = {store: store};
+    document.open();
+    document.write(rec.html.slice(0, i) + code + rec.html.slice(i));
+    document.close();
+  }
+
+  var msg = document.getElementById('msg');
+  function ask(text, bad) {
+    msg.textContent = text; msg.className = bad ? 'bad' : '';
+    document.getElementById('pickBox').hidden = false;
+    document.getElementById('note').hidden = false;
+  }
+  document.getElementById('toolIn').addEventListener('change', function (e) {
+    var f = e.target.files[0]; e.target.value = '';
+    if (!f) return;
+    msg.textContent = 'Kaydediliyor…';
+    store(f).then(function () { location.reload(); })
+      .catch(function () { ask('Bu dosya “5 - KATALOGLARI GÜNCELLE.html” değil. Lütfen o dosyayı seçin.', true); });
+  });
+  if (!window.indexedDB || !window.crypto || !crypto.subtle) { ask('Bu tarayıcı çok eski. Lütfen Google Chrome ile açın.', true); return; }
+  get().then(function (rec) {
+    if (rec && rec.html && valid(rec.html) && location.hash !== '#yeni') open(rec);
+    else ask('İlk kurulum: güncelleme aracını bir kez seçin.');
+  });
+})();
+</script>
+</body>
+</html>
