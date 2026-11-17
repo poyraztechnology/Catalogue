@@ -71,7 +71,8 @@ var GROUPS = [
     { n: 'Almak istediğimiz ürünler', d: 'Tedarikçilere gönderilen alım listesi', u: 'wanted/', i: 'cart', c: 'amber' }]},
   { t: 'Sadece ekip', items: [
     { n: 'Trade Desk', d: 'Alış fiyatları ve tedarikçiler', u: 'team/', i: 'lock', c: 'navy', tag: 'şifreli' },
-    { n: 'Almak istediğimiz – kim istedi', d: 'Hangi müşteri ne istedi', u: 'wanted-team/', i: 'users', c: 'navy', tag: 'şifreli' }]},
+    { n: 'Almak istediğimiz – kim istedi', d: 'Hangi müşteri ne istedi', u: 'wanted-team/', i: 'users', c: 'navy', tag: 'şifreli' },
+    { n: 'EXPORT & IMPORT – fuar firma listesi', d: 'Google E-Tablolar, fuarlarda tanıştığımız firmalar', u: 'https://docs.google.com/spreadsheets/d/1gmoZKCCVcHK97eNyGBMFIXqE_vCHoWBiNBCWdob0Zo0/edit?usp=sharing', i: 'users', c: 'green', noShare: true }]},
   { t: 'Benim', items: [
     { n: 'Dijital kartvizitim', d: 'Gamze Okmen – Poyraz Technology', u: 'gamze/', i: 'card', c: 'blue' },
     { n: 'Katalogları güncelle', d: 'Excel\'i yükleyip linkleri yenileme sayfası', u: 'guncelle/', i: 'refresh', c: 'amber', noShare: true }]},
@@ -83,7 +84,7 @@ function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').
 var html = '';
 GROUPS.forEach(function (g) {
   html += '<h2>' + esc(g.t) + '</h2><div class="card">' + g.items.map(function (x) {
-    var url = BASE + x.u;
+    var url = /^https?:\/\//.test(x.u) ? x.u : BASE + x.u;
     return '<div class="row"><span class="ic ' + x.c + '">' + I[x.i] + '</span><span class="tx"><b>' + esc(x.n) + (x.tag ? '<span class="tag">' + esc(x.tag) + '</span>' : '') +
       '</b><small>' + esc(x.d) + '</small></span><div class="acts"><a class="main" href="' + esc(url) + '" target="_blank" rel="noopener">' + I.open + ' Aç</a>' +
       (x.noShare ? '' : '<button data-copy="' + esc(url) + '">' + I.copy + ' Kopyala</button><button data-share="' + esc(url) + '" data-title="' + esc(x.n) + '">' + I.share + ' Gönder</button>') + '</div></div>';
