@@ -1,0 +1,14 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Daoud;Mohammad;;;
+FN:Mohammad Daoud
+ORG:Poyraz Technology Trading FZCO
+TITLE:General Manager
+TEL;TYPE=CELL,VOICE:+971562704441
+EMAIL;TYPE=INTERNET,WORK:daoud@poyraztechnology.com
+URL:https://poyraztechnology.com
+URL:https://poyraztechnology.github.io/Catalogue/
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/mohammad-salim-daoud-69a022431
+ADR;TYPE=WORK:;;IFZA Business Park\, A1 Building\, Dubai Silicon Oasis;Dubai;;;United Arab Emirates
+NOTE:Wholesale supplier of all technology products - brand new\, factory sealed. Server memory\, SSD and HDD\, CPUs\, GPUs\, laptops and more.
+END:VCARD
