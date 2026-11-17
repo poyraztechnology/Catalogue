@@ -163,6 +163,22 @@ box-shadow:0 14px 28px -26px rgba(0,14,41,.6)}
 .choices.locked .choice .go{display:none}
 .choices.locked .choice .lk{display:block}
 .choices.locked .choice.main .lk{color:#fff}
+/* team page */
+.team-head{text-align:center;padding:0 24px;margin-top:-58px;position:relative;z-index:2}
+.team-head .badge{width:76px;height:76px;border-radius:50%;margin:0 auto;display:grid;place-items:center;background:var(--blue);color:#fff;border:4px solid #fff;
+box-shadow:0 16px 32px -16px rgba(0,14,41,.6)}
+.team-head .badge svg{width:34px;height:34px}
+.team-head h1{margin-top:12px}
+.team-head p{font-size:14px;color:var(--muted);margin-top:6px}
+.people{display:grid;gap:10px;padding:20px 20px 0}
+.person{display:grid;grid-template-columns:62px minmax(0,1fr) 18px;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:16px;
+background:#fff;box-shadow:0 12px 26px -24px rgba(0,14,41,.6)}
+.person img{width:62px;height:62px;border-radius:50%;object-fit:cover;display:block;border:2px solid #EAF2FF}
+.person .n{display:block;font-family:var(--fh);font-weight:700;font-size:16px;color:var(--navy);line-height:1.25}
+.person .r{display:block;font-family:var(--fh);font-weight:600;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-top:4px;line-height:1.45}
+.person .l{display:block;font-size:12.5px;color:var(--muted);margin-top:3px}
+.person .go{width:18px;height:18px;color:#A1ACBD}
+.person.me{border-color:#BBD3F7;background:#F5F9FF}
 /* verified member */
 .verify{display:grid;grid-template-columns:40px minmax(0,1fr) 16px;gap:12px;align-items:center;margin:8px 20px 0;padding:13px 14px;border-radius:14px;
 border:1px solid #CFE0FA;background:#F0F6FF}
@@ -178,7 +194,7 @@ footer{text-align:center;font-size:12px;color:#8A96A8;padding:20px 24px calc(26p
 .toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;pointer-events:none;
 background:var(--navy);color:#fff;font-size:13.5px;font-weight:500;padding:11px 16px;border-radius:12px;transition:.25s ease;max-width:90vw;text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
-@media (prefers-reduced-motion:no-preference){.who,.label,.choices,.gate,.supply,.trust,.verify,.actions,.details,.about{animation:up .5s ease both}
+@media (prefers-reduced-motion:no-preference){.who,.team-head,.people,.label,.choices,.gate,.supply,.trust,.verify,.actions,.details,.about{animation:up .5s ease both}
 .gate,.label,.actions{animation-delay:.05s}.choices,.details{animation-delay:.1s}.supply,.about{animation-delay:.15s}.trust{animation-delay:.2s}
 @keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}}
 </style>
@@ -207,11 +223,11 @@ background:var(--navy);color:#fff;font-size:13.5px;font-weight:500;padding:11px 
       <a href="tel:+905368694760"><img src="../card-assets/icon-phone.png" alt=""><span><span class="k">Mobile / WhatsApp · Türkiye</span><span class="v">+90 536 869 47 60</span></span><svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a>
       <a href="mailto:suleyman@poyraztechnology.com"><img src="../card-assets/icon-gmail.png" alt=""><span><span class="k">Email</span><span class="v mail">suleyman@<wbr>poyraztechnology.com</span></span><svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a>
       <a href="https://www.linkedin.com/in/s%C3%BCleyman-poyraz-b88b0768" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4.5" fill="#0A66C2"/><path fill="#fff" d="M7.2 9.7H4.9V19h2.3V9.7zM6.05 8.5a1.35 1.35 0 1 0 0-2.7 1.35 1.35 0 0 0 0 2.7zM19.1 13.7c0-2.6-1.4-4.2-3.5-4.2-1.4 0-2.2.7-2.6 1.4V9.7h-2.2V19h2.3v-4.9c0-1.3.6-2.3 1.8-2.3 1.1 0 1.7.8 1.7 2.3V19h2.5v-5.3z"/></svg><span><span class="k">LinkedIn</span><span class="v">Süleyman Poyraz</span></span><svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a>
-      <a href="https://poyraztechnology.com" target="_blank" rel="noopener"><img src="../card-assets/icon-globe.png" alt=""><span><span class="k">Website</span><span class="v">poyraztechnology.com</span></span><svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a>
+      <a href="https://poyraztechnology.com"><img src="../card-assets/icon-globe.png" alt=""><span><span class="k">Website</span><span class="v">poyraztechnology.com</span></span><svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a>
       <a href="https://maps.google.com/?q=IFZA+Business+Park+Dubai+Silicon+Oasis" target="_blank" rel="noopener"><img src="../card-assets/icon-maps.png" alt=""><span><span class="k">Office · open in Maps</span><span class="v">IFZA Business Park, A1 Building, Dubai Silicon Oasis, UAE</span></span><svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a>
     </nav>
     <p class="about"><b>What we do.</b> Wholesale supplier of all technology products in bulk: server memory, SSD and HDD, CPUs, GPUs, laptops and more. Brand new, factory sealed products only. All prices EXW.</p>
-    <a class="verify" href="https://www.thebrokersite.com/companies?query=Poyraz" target="_blank" rel="noopener"><span class="vi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.2 1.5 2.6-.1 1 2.4 2.2 1.4-.5 2.6.8 2.5-1.9 1.8-.4 2.6-2.6.6-1.6 2.1-2.4-1-2.4 1-1.6-2.1-2.6-.6-.4-2.6-1.9-1.8.8-2.5-.5-2.6 2.2-1.4 1-2.4 2.6.1z"/><path d="m8.9 12.1 2.1 2.1 4.1-4.3"/></svg></span><span><b>Member of The Broker Site</b><small>Global IT trading platform. You can contact them to verify our company.</small></span><svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a>
+    <a class="verify" href="https://www.thebrokersite.com/companies?query=Poyraz"><span class="vi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2l2.2 1.5 2.6-.1 1 2.4 2.2 1.4-.5 2.6.8 2.5-1.9 1.8-.4 2.6-2.6.6-1.6 2.1-2.4-1-2.4 1-1.6-2.1-2.6-.6-.4-2.6-1.9-1.8.8-2.5-.5-2.6 2.2-1.4 1-2.4 2.6.1z"/><path d="m8.9 12.1 2.1 2.1 4.1-4.3"/></svg></span><span><b>Member of The Broker Site</b><small>Global IT trading platform. You can contact them to verify our company.</small></span><svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></a>
     <button class="share" id="share" type="button" data-url="https://poyraztechnology.github.io/Catalogue/suleyman/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 12v6.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V12"/></svg>Share this card</button>
     <footer>Poyraz Technology Trading – FZCO · Dubai, UAE</footer>
   </main>
