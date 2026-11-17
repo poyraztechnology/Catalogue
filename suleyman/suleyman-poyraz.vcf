@@ -1,0 +1,15 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Poyraz;Süleyman;;;
+FN:Süleyman Poyraz
+ORG:Poyraz Technology Trading FZCO
+TITLE:Founder & Chairman
+TEL;TYPE=CELL,VOICE:+971503955050
+TEL;TYPE=CELL,VOICE:+905368694760
+EMAIL;TYPE=INTERNET,WORK:suleyman@poyraztechnology.com
+URL:https://poyraztechnology.com
+URL:https://poyraztechnology.github.io/Catalogue/
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/s%C3%BCleyman-poyraz-b88b0768
+ADR;TYPE=WORK:;;IFZA Business Park\, A1 Building\, Dubai Silicon Oasis;Dubai;;;United Arab Emirates
+NOTE:Wholesale supplier of all technology products - brand new\, factory sealed. Server memory\, SSD and HDD\, CPUs\, GPUs\, laptops and more.
+END:VCARD
